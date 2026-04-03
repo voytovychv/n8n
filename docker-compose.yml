@@ -3,6 +3,7 @@ version: "3.8"
 services:
   postgres:
     image: postgres:15
+    # image: ankane/pgvector:latest
     container_name: postgres
     ports:
       - "5532:5432"
@@ -12,6 +13,7 @@ services:
       POSTGRES_DB: n8n
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
 
   n8n:
     image: n8nio/n8n
@@ -35,15 +37,6 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
 
-  # ollama:
-  #   image: ollama/ollama:latest
-  #   container_name: ollama
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ollama_data:/root/.ollama
-
 volumes:
   postgres_data:
   n8n_data:
-  ollama_data:
