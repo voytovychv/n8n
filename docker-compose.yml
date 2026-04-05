@@ -15,6 +15,18 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init:/docker-entrypoint-initdb.d
 
+  pgvector:
+    image: ankane/pgvector:latest
+    container_name: pgvector
+    ports:
+      - "5533:5432"
+    environment:
+      POSTGRES_USER: n8n
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: n8n
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+
   n8n:
     image: n8nio/n8n
     container_name: n8n
@@ -39,4 +51,5 @@ services:
 
 volumes:
   postgres_data:
+  pgvector_data:
   n8n_data:
